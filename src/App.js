@@ -9,7 +9,7 @@ function ImageUpload() {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      setImage(reader.result);
+      setImage(reader.result.split(',')[1]); // Supprime le préfixe base64 ici
     };
   };
 
@@ -17,7 +17,7 @@ function ImageUpload() {
     e.preventDefault();
     try {
       const response = await axios.post('https://x1mavx5ya0.execute-api.eu-west-3.amazonaws.com/Dev/send', {
-        image: image.split(',')[1] // Supprime le préfixe de la chaîne base64
+        image: image // Utilisez l'image déjà transformée
       });
       const downloadUrl = response.data.download_url;
       window.open(downloadUrl, '_blank');
