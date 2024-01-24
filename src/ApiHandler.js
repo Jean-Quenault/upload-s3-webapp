@@ -11,7 +11,7 @@ function ApiHandler() {
 
   // This function gets a presigned URL for uploading a file
   const getPresignedUrl = async (fileName) => {
-    const response = await fetch('https://x1mavx5ya0.execute-api.eu-west-3.amazonaws.com/Dev/upload?file_name=' + fileName);
+    const response = await fetch(`${process.env.REACT_APP_API_URL}upload?file_name=${fileName}`);    
     const data = await response.json();
     console.log(data.url);
     return data.url;
