@@ -24,11 +24,13 @@ function ApiHandler() {
           body: file
         });
         if (!result.ok) {
-          throw new Error('Erreur lors du téléversement du fichier');
+          throw new Error('An error occurred while uploading the file');
         }
         console.log(await result.text());
+        window.alert('The file has been uploaded successfully!');
       } catch (error) {
-        console.error('Erreur lors du téléversement du fichier :', error);
+        console.error('An error occurred while uploading the file', error);
+        window.alert('An error occurred while uploading the file');
       }
     }
   };
