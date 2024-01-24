@@ -24,8 +24,8 @@ function ApiHandler() {
   const uploadFile = async () => {
     if (file) {
       const url = await getPresignedUrl(file.name);
-      await axios.put(url, file);
-      console.log(result);
+      const result = await axios.put(url, file);  // Capturez le résultat ici
+      console.log(result);  // Et affichez-le ici
     }
   };
 
