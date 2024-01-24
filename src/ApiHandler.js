@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 function ApiHandler() {
   const [file, setFile] = useState(null);
+  const [message, setMessage] = useState(''); // New state for the message
 
   // This function is triggered when a file is selected
   const handleFileChange = (event) => {
@@ -30,20 +31,21 @@ function ApiHandler() {
           throw new Error('An error occurred while uploading the file');
         }
         console.log(await result.text());
-        window.alert('The file has been uploaded successfully!');
+        setMessage('The file has been uploaded successfully!'); // Set the message
       } catch (error) {
         console.error('An error occurred while uploading the file', error);
-        window.alert('An error occurred while uploading the file');
+        setMessage('An error occurred while uploading the file'); // Set the message
       }
     }
   };
 
-  // The component renders a file input and a button for uploading the file
+  // The component renders a file input, a button for uploading the file, and a message
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', backgroundColor: '#f5f5f5' }}>
       <h1 style={{ marginBottom: '50px' }}>Webapp to upload file on private S3</h1>
       <input type="file" onChange={handleFileChange} style={{ marginBottom: '20px' }} />
-      <button onClick={uploadFile} style={{ padding: '10px 20px', backgroundColor: 'blue', color: 'white', border: 'none', borderRadius: '5px' }}>Envoyer le fichier</button>
+      <button onClick={uploadFile} style={{ padding: '10px 20px', backgroundColor: 'blue', color: 'white', border: 'none', borderRadius: '5px', marginBottom: '20px' }}>Envoyer le fichier</button>
+      <p>{message}</p> {/* Display the message */}
     </div>
   );
 }
