@@ -3,11 +3,13 @@ import React, { useState } from 'react';
 function ApiHandler() {
   const [file, setFile] = useState(null);
 
+  // This function is triggered when a file is selected
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
     console.log(event.target.files[0]);
   };
 
+  // This function gets a presigned URL for uploading a file
   const getPresignedUrl = async (fileName) => {
     const response = await fetch('https://x1mavx5ya0.execute-api.eu-west-3.amazonaws.com/Dev/upload?file_name=' + fileName);
     const data = await response.json();
@@ -15,6 +17,7 @@ function ApiHandler() {
     return data.url;
   };
 
+  // This function uploads the file to the presigned URL
   const uploadFile = async () => {
     if (file) {
       try {
@@ -35,6 +38,7 @@ function ApiHandler() {
     }
   };
 
+  // The component renders a file input and a button for uploading the file
   return (
     <div>
       <input type="file" onChange={handleFileChange} />
