@@ -47,8 +47,9 @@ function ApiHandler() {
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', backgroundColor: '#f5f5f5' }}>
       <h1 style={{ marginBottom: '50px' }}>Webapp to upload file on private S3</h1>
       <input type="file" onChange={handleFileChange} style={{ marginBottom: '20px' }} />
-      <button onClick={uploadFile} style={{ padding: '10px 20px', backgroundColor: 'blue', color: 'white', border: 'none', borderRadius: '5px', marginBottom: '20px' }}>Envoyer le fichier</button>
+      <button onClick={uploadFile} style={{ padding: '10px 20px', backgroundColor: 'blue', color: 'white', border: 'none', borderRadius: '5px', marginBottom: '20px' }}>Upload File</button>
       <p>{message}</p> {/* Display the message */}
+      {uploadProgress > 0 && <p>Upload Progress: {uploadProgress}%</p>} {/* Display the upload progress */}
       {uploadProgress > 0 && <progress value={uploadProgress} max="100" />} {/* Display the progress bar */}
     </div>
   );
