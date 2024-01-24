@@ -15,8 +15,12 @@ function ApiHandler() {
     const response = await axios.get('https://x1mavx5ya0.execute-api.eu-west-3.amazonaws.com/Dev/upload', {
       params: {
         file_name: fileName
-      }
-    });
+    },
+      headers: {
+        'Access-Control-Allow-Origin': '*',  // Autorise les requêtes de toutes les origines
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',  // Autorise ces méthodes HTTP
+            }
+        });
     console.log(response.data.url);
     return response.data.url;
   };
