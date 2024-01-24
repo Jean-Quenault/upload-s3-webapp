@@ -6,7 +6,9 @@ function ApiHandler() {
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
+    console.log(event.target.files[0]);  // Ajoutez cette ligne
   };
+
 
   const getPresignedUrl = async (fileName) => {
     // Remplacez par votre URL d'API Gateway
@@ -15,6 +17,7 @@ function ApiHandler() {
         file_name: fileName
       }
     });
+    console.log(response.data.url);
     return response.data.url;
   };
 
@@ -22,6 +25,7 @@ function ApiHandler() {
     if (file) {
       const url = await getPresignedUrl(file.name);
       await axios.put(url, file);
+      console.log(result);
     }
   };
 
