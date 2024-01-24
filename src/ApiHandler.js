@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import axios from 'axios'; // Import axios
 
 function ApiHandler() {
   const [file, setFile] = useState(null);
-  const [message, setMessage] = useState(''); // New state for the message
+  const [message, setMessage] = useState('');
+  const [uploadProgress, setUploadProgress] = useState(0); // New state for the upload progress
 
   // This function is triggered when a file is selected
   const handleFileChange = (event) => {
@@ -23,14 +25,15 @@ function ApiHandler() {
     if (file) {
       try {
         const url = await getPresignedUrl(file.name);
-        const result = await fetch(url, {
-          method: 'PUT',
-          body: file
+        const result = await axios.put(url, file, {
+          onUploadProgress: (progressEvent) => {
+            setUploadProgress(Math.round((progressEvent.loaded * 100) / progressEvent.total));
+          }
         });
-        if (!result.ok) {
+        if (!result.status === 200) {
           throw new Error('An error occurred while uploading the file');
         }
-        console.log(await result.text());
+        console.log(result);
         setMessage('The file has been uploaded successfully!'); // Set the message
       } catch (error) {
         console.error('An error occurred while uploading the file', error);
@@ -46,6 +49,7 @@ function ApiHandler() {
       <input type="file" onChange={handleFileChange} style={{ marginBottom: '20px' }} />
       <button onClick={uploadFile} style={{ padding: '10px 20px', backgroundColor: 'blue', color: 'white', border: 'none', borderRadius: '5px', marginBottom: '20px' }}>Envoyer le fichier</button>
       <p>{message}</p> {/* Display the message */}
+      {uploadProgress > 0 && <progress value={uploadProgress} max="100" />} {/* Display the progress bar */}
     </div>
   );
 }
