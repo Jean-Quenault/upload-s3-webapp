@@ -1,35 +1,35 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 function ApiHandler() {
   const [file, setFile] = useState(null);
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
-    console.log(event.target.files[0]);  // Ajoutez cette ligne
+    console.log(event.target.files[0]);
   };
 
-
   const getPresignedUrl = async (fileName) => {
-    // Remplacez par votre URL d'API Gateway
-    const response = await axios.get('https://x1mavx5ya0.execute-api.eu-west-3.amazonaws.com/Dev/upload', {
-      params: {
-        file_name: fileName
-    },
-      headers: {
-        'Access-Control-Allow-Origin': '*',  // Autorise les requêtes de toutes les origines
-        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS',  // Autorise ces méthodes HTTP
-            }
-        });
-    console.log(response.data.url);
-    return response.data.url;
+    const response = await fetch('https://x1mavx5ya0.execute-api.eu-west-3.amazonaws.com/Dev/upload?file_name=' + fileName);
+    const data = await response.json();
+    console.log(data.url);
+    return data.url;
   };
 
   const uploadFile = async () => {
     if (file) {
-      const url = await getPresignedUrl(file.name);
-      const result = await axios.put(url, file);  // Capturez le résultat ici
-      console.log(result);  // Et affichez-le ici
+      try {
+        const url = await getPresignedUrl(file.name);
+        const result = await fetch(url, {
+          method: 'PUT',
+          body: file
+        });
+        if (!result.ok) {
+          throw new Error('Erreur lors du téléversement du fichier');
+        }
+        console.log(await result.text());
+      } catch (error) {
+        console.error('Erreur lors du téléversement du fichier :', error);
+      }
     }
   };
 
