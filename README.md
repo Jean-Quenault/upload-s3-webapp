@@ -58,12 +58,16 @@ def lambda_handler(event, context):
 - File upload with progress tracking
 - Display of upload status messages
 
+![Webapp interface](images/webapp.png)
+
 ## Installation with node
 
 1. Clone this repository.
 2. Run `npm install` to install the necessary dependencies.
 3. Create a `.env` file in the root directory of the project and add the following variable: `REACT_APP_API_URL=<your-api-url>`.
 4. Run `npm start` to start the application.
+
+A quick deployment can be made with AWS Amplify. In this case the REACT_APP_API_URL variable has to be defined as a environment variable in the app settings of amplify.
 
 ## Usage
 
